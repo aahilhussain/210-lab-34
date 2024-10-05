@@ -13,8 +13,12 @@ class Color {
 
 //creating print function
 public:
+    //already have a default constructor created here
     Color() : red(0), green(0), blue(0) {}
+    //already have a parameterized constructor here
     Color(int r, int g, int b) : red(r), green(g), blue(b) {}
+    //creating a partial constructor
+    Color(int r, int g) : red(r), green(g), blue(0) {}
     
     // getters and setters with check for bounds on color parameters
     void setRed(int r)              { if(r >= 0 && r <= 225) red = r; else red = 0;}
@@ -42,8 +46,11 @@ int main(){
     color3.setRed(300); //invalid value to check if statement (should be 0)
     color3.setGreen(-10); //invalid value to check if statement (should be 0)
     color3.setBlue(120);
+    Color color4(100,150);
+
     color1.print();
     color2.print();
     color3.print();
+    color4.print();
     return 0;
 }
