@@ -1,5 +1,10 @@
 #include <iostream>
 #include <string>
+#include <fstream>
+#include <vector>
+#include <cstdlib>
+#include <ctime>
+#include <iomanip>
 using namespace std;
 
 struct Review {
@@ -70,38 +75,28 @@ class Movie {
     }
 };
 
+double randRating() {
+    return static_cast<float> (rand() % 41 + 10) / 10.0;
+}
+
 int main() {
-    int choice;
-    cout << "Which linked list method should we use?\n";
-    cout << "   [1] New nodes are added at the head of the linked list\n";
-    cout << "   [2] New nodes are added at the tail of the linked list\n";
-    cout << "   Choise: ";
-    cin >> choice;
+    srand(static_cast<unsigned>(time(0)));
 
-    if(choice != 1 && choice != 2) {
-        cout << "Invalid choice. Exiting...\n";
-        return 1; 
+    vector<Movie> movies;
+    movies.push_back(Movie("Movie A"));
+    movies.push_back(Movie("Movie B"));
+
+    ifstream inputFile("reviews.txt");
+    if(!inputFile) {
+        cerr << "Error opening file!" << endl;
+        return 1;
     }
 
-    char anotherReview ='y';
-    while (anotherReview == 'y') {
-        float rating;
-        string comments;
-        cout << "Enter review rating 0-5: ";
-        cin >> rating;
-        cout << "Enter review comments: ";
-        cin.ignore();
-        getline(cin, comments);
-
-        if (choice == 1) {
-            addNodeAtHead(rating, comments);
-        } else if (choice == 2) {
-            addNodeAtTail(rating, comments);
-        }
-
-        cout << "Enter another review? Y/N: ";
-        cin >> anotherReview;
+    string comment;
+    while(getline(inputFile, comment)) {
+        
     }
+
 
     outputReviewsAndAverage();
     cleanup();
