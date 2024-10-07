@@ -24,8 +24,20 @@ void addNodeAtTail(float rating, string comments) {
         return;
     }
     Review* temp = head;
-    while (teamp-> next != nullptr) {
-        
+    while (temp-> next != nullptr) {
+        temp = temp-> next;
+    }
+    temp -> next = new Review{rating, comments, nullptr};
+}
+
+void outputReviews() {
+    Review* temp = head;
+    while(temp != nullptr) {
+        cout << "Rating: " << temp -> rating << ", Comments: " <<temp->comments << endl;
+        temp = temp-> next;
     }
 }
 
+int main() {
+    return 0;
+}
