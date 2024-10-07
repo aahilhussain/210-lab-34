@@ -8,51 +8,67 @@ struct Review {
     Review* next;
 };
 
-Review* head = nullptr;
+//Review* head = nullptr;
+class Movie {
+    private:
+        string title;
+        Review* head;
 
+    public:
+        Movie(string movieTitle) : title(movieTitle), head(nullptr) {}
 
-//function to add in front
-void addNodeAtHead(float rating, string comments) {
-    Review* newReview = new Review{rating, comments, head};
-    head = newReview;
-}
-
-//function to add to the back
-void addNodeAtTail(float rating, string comments) {
-    if (head == nullptr) {
-        head = new Review{rating, comments, nullptr};
-        return;
+    //clean up memory
+    ~Movie() {
+        cleanup();
     }
-    Review* temp = head;
-    while (temp-> next != nullptr) {
-        temp = temp-> next;
-    }
-    temp -> next = new Review{rating, comments, nullptr};
-}
 
-void outputReviewsAndAverage() {
-    Review* temp = head;
-    float sum = 0;
-    int count = 0;
-    while (temp != nullptr) {
-        cout << "Rating: " << temp -> rating << ", Comments: " << temp->comments << endl;
-        sum += temp-> rating;
-        temp = temp->next;
-        count++;
+    //function to add in front
+    void addAReview(float rating, string comments) {
+        Review* newReview = new Review{rating, comments, head};
+        head = newReview;
     }
-    if (count > 0)
-    {
-        cout << "Average: " << sum / (count - 1) << endl;
-    }
-}
 
-void cleanup() {
-    while (head != nullptr) {
+    //function to add to the back
+    void addNodeAtTail(float rating, string comments) {
+        if (head == nullptr) {
+            head = new Review{rating, comments, nullptr};
+            return;
+        }
         Review* temp = head;
-        head = head-> next;
-        delete temp;
+        while (temp-> next != nullptr) {
+            temp = temp-> next;
+        }
+        temp -> next = new Review{rating, comments, nullptr};
     }
-}
+
+    void outputReviewsAndAverage() const {
+        Review* temp = head;
+        float sum = 0;
+        int count = 0;
+        while (temp != nullptr) {
+            cout << "Rating: " << temp -> rating << ", Comments: " << temp->comments << endl;
+            sum += temp-> rating;
+            temp = temp->next;
+            count++;
+        }
+        if (count > 0)
+        {
+            cout << "Average: " << sum / (count - 1) << endl;
+        }
+    }
+
+    void cleanup() {
+        while (head != nullptr) {
+            Review* temp = head;
+            head = head-> next;
+            delete temp;
+        }
+    }
+    
+    string getTitle() const {
+        return title;
+    }
+};
 
 int main() {
     int choice;
