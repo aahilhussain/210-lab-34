@@ -30,14 +30,6 @@ void addNodeAtTail(float rating, string comments) {
     temp -> next = new Review{rating, comments, nullptr};
 }
 
-void outputReviews() {
-    Review* temp = head;
-    while(temp != nullptr) {
-        cout << "Rating: " << temp -> rating << ", Comments: " <<temp->comments << endl;
-        temp = temp-> next;
-    }
-}
-
 void outputReviewsAndAverage() {
     Review* temp = head;
     float sum = 0;
@@ -51,6 +43,14 @@ void outputReviewsAndAverage() {
     if (count > 0)
     {
         cout << "Average: " << sum / (count - 1) << endl;
+    }
+}
+
+void cleanup() {
+    while (head != nullptr) {
+        Review* temp = head;
+        head = head-> next;
+        delete temp;
     }
 }
 
@@ -87,8 +87,8 @@ int main() {
         cin >> anotherReview;
     }
 
-    outputReviews();
-
+    outputReviewsAndAverage();
+    cleanup();
     return 0;
 
 
