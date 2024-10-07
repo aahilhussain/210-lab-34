@@ -94,12 +94,20 @@ int main() {
 
     string comment;
     while(getline(inputFile, comment)) {
-        
+        double rating = randRating();
+        movies[0].addAReview(rating, comment);
+
+        rating = randRating();
+        movies[1].addAReview(rating, comment);
     }
 
+    inputFile.close();
 
-    outputReviewsAndAverage();
-    cleanup();
+    for (const auto& movie : movies) {
+        cout << "Reviews for " << movie.getTitle() << ":" << endl;
+        movie.outputReviewsAndAverage();
+        cout << endl;
+    }
     return 0;
 
 
