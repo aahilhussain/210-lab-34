@@ -9,7 +9,7 @@ const int SIZE = 3;
 class Chair {
 private:
     int legs;
-    double * prices;
+    double *prices;
 public:
     // constructors
     Chair() {
@@ -30,6 +30,11 @@ public:
         for (int i = 0; i < SIZE; i++){
             prices[i] = p[i];
         }
+    }
+
+    //destructor
+    ~Chair() {
+        delete[] prices;
     }
 
     // setters and getters
@@ -64,12 +69,10 @@ int main() {
 
     //creating pointer to first chair object
     Chair *chairPtr = new Chair;
-    chairPtr->setLegs(4);
-    chairPtr->setPrices(121.21, 232.32, 414.14);
     chairPtr->print();
 
     //creating dynamic chair object with constructor
-    double prices[SIZE] = {525.25, 434.34, 252.52};
+    double prices[SIZE] = {525.25, 434.34, 111.11};
     Chair *livingChair = new Chair(3, prices);
     livingChair->print();
     delete livingChair;
@@ -77,8 +80,11 @@ int main() {
 
     //creating dynamic array of chair objects
     Chair *collection = new Chair[SIZE];
-    for (int i = 0; i < SIZE; i++)
+    for (int i = 0; i < SIZE; i++){
         collection[i].print();
-    
+    }
+
+    delete[] collection;
+
     return 0;
 }
