@@ -1,6 +1,6 @@
-//copied over code
-
 #include <iostream>
+#include <cstdlib>
+#include <ctime>
 #include <iomanip>
 
 using namespace std;
@@ -14,17 +14,16 @@ public:
     // constructors
     Chair() {
         prices = new double[SIZE];
-        legs = 0;
-        for (int i = 0; i < SIZE; i++)
-            prices[i] = 0;
+        //choose either 3 or 4 legs
+        legs = (rand() %2 ) + 3;
+        
+        //random price select from 100-999
+        const int MIN = 10000, MAX = 99999;
+        for (int i = 0; i < SIZE; i++) {
+            prices[i] = (rand() % (MAX - MIN + 1) + MIN) / 100.0;
+        }
     }
-    Chair(int l) {
-        prices = new double[SIZE];
-        legs = l;
-        for (int i = 0; i < SIZE; i++)
-            prices[i] = 0;
-    }
-
+    
     // setters and getters
     void setLegs(int l)      { legs = l; }
     int getLegs()            { return legs; }
