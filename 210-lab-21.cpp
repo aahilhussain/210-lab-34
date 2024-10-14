@@ -33,28 +33,28 @@ const string Goat::names[15] = {
     "Mondo", "Momo"
 };
 
-const string Goat::names[15] = 
+const string Goat::names[15] = {
+    "Red", "Orange", "Yellow", "Green", "Blue", "Indigo", "Violet", 
+    "White", "Black", "Rose", "Brown", "Purple", "Pink", "Cream", "Grey"
+};
 
+class DoublyLinkedList {
 private:
     struct Node {
-        int data;
+        Goat data;
         Node* prev;
         Node* next;
-        Node(int val, Node* p = nullptr, Node* n = nullptr) {
-            data = val; 
-            prev = p;
-            next = n;
-        }
-    };
+        Node(Goat val, Node* p = nullptr, Node* n = nullptr) : data(val), prev(p), next(n) {}
+        };
 
     Node* head;
     Node* tail;
 
 public:
     // constructor
-    DoublyLinkedList() { head = nullptr; tail = nullptr; }
+    DoublyLinkedList() : head(nullptr), tail(nullptr) {}
 
-    void push_back(int value) {
+    void push_back(Goat value) {
         Node* newNode = new Node(value);
         if (!tail)  // if there's no tail, the list is empty
             head = tail = newNode;
@@ -65,7 +65,7 @@ public:
         }
     }
 
-    void push_front(int value) {
+    void push_front(Goat value) {
         Node* newNode = new Node(value);
         if (!head)  // if there's no head, the list is empty
             head = tail = newNode;
@@ -76,7 +76,7 @@ public:
         }
     }
 
-    void insert_after(int value, int position) {
+    void insert_after(Goat value, int position) {
         if (position < 0) {
             cout << "Position must be >= 0." << endl;
             return;
@@ -107,11 +107,11 @@ public:
         temp->next = newNode;
     }
 
-    void delete_node(int value) {
+    void delete_node(const Goat& value) {
         if (!head) return; // Empty list
 
         Node* temp = head;
-        while (temp && temp->data != value)
+        while (temp && temp->data.getDescription() != value.getDescription())
             temp = temp->next;
 
         if (!temp) return; // Value not found
@@ -131,7 +131,7 @@ public:
         delete temp;
     }
 
-    void print() {
+    void print() const {
         Node* current = head;
         if (!current) return;
         while (current) {
