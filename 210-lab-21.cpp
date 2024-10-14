@@ -1,9 +1,40 @@
 #include <iostream>
+#include <string>
+#include <cstdlib>
+#include <ctime>
 using namespace std;
 
 const int MIN_NR = 10, MAX_NR = 99, MIN_LS = 5, MAX_LS = 20;
 
-class DoublyLinkedList {
+class Goat {
+private:
+    int age;
+    string name;
+    string color;
+    static const string names[15];
+    static const string colors[15];
+public: 
+    Goat() {
+        age = rand() % 20 + 1;
+        name = names[rand() % 15];
+        color = colors[rand() % 15];
+    }
+
+    Goat(int a, string n, string c) : age(a), name(n), color(c) {}
+
+    string getDescription() const {
+        return name + " (" + color + ", " + to_string(age) + ")";
+    }
+};
+
+const string Goat::names[15] = {
+    "Aahil", "Momma", "Poppa", "Baby", "Alex", "Daisy", "Jasmine",
+    "Pumpkin", "Theodore", "Grover", "Buddy", "Bobby", "Barney",
+    "Mondo", "Momo"
+};
+
+const string Goat::names[15] = 
+
 private:
     struct Node {
         int data;
