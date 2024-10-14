@@ -33,7 +33,7 @@ const string Goat::names[15] = {
     "Mondo", "Momo"
 };
 
-const string Goat::names[15] = {
+const string Goat::colors[15] = {
     "Red", "Orange", "Yellow", "Green", "Blue", "Indigo", "Violet", 
     "White", "Black", "Rose", "Brown", "Purple", "Pink", "Cream", "Grey"
 };
@@ -132,23 +132,27 @@ public:
     }
 
     void print() const {
+        if (!head) {
+            cout << "List is Empty" << endl;
+            return;
+        }
         Node* current = head;
-        if (!current) return;
-        while (current) {
-            cout << current->data << " ";
+        while(current) {
+            cout << "   " << current->data.getDescription() << endl;
             current = current->next;
         }
-        cout << endl;
     }
 
     void print_reverse() {
-        Node* current = tail;
-        if (!current) return;
-        while (current) {
-            cout << current->data << " ";
-            current = current->prev;
+        if (!tail) {
+            cout << "List is Empty" << endl;
+            return;
         }
-        cout << endl;
+        Node* current = tail;
+        while(current) {
+            cout << "   " << current->data.getDescription() << endl;
+            current = current->next;
+        }
     }
 
     ~DoublyLinkedList() {
@@ -162,12 +166,15 @@ public:
 
 // Driver program
 int main() {
+    srand(time(0));
+
     DoublyLinkedList list;
     int size = rand() % (MAX_LS-MIN_LS+1) + MIN_LS;
+    for (int i = 0; i < size; ++i){
+        list.push_back(Goat());
+    }
 
-    for (int i = 0; i < size; ++i)
-        list.push_back(rand() % (MAX_NR-MIN_NR+1) + MIN_NR);
-    cout << "List forward: ";
+    cout << "List forward: " << endl;
     list.print();
 
     cout << "List backward: ";
@@ -175,7 +182,7 @@ int main() {
 
     cout << "Deleting list, then trying to print.\n";
     list.~DoublyLinkedList();
-    cout << "List forward: ";
+    cout << "List forward: \n";
     list.print();
 
     return 0;
