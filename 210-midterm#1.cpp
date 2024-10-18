@@ -72,82 +72,112 @@ public:
         temp->next = newNode;
     }
 
+    //function that will delete a node with a given value
     void delete_val(int value) {
+        //if the list is empty, nothing will occur and traverse the list
         if (!head) return;
-
         Node* temp = head;
         
+        //as long as temp and data that temp is pointing to do not contain a value
         while (temp && temp->data != value)
+            //move to the next pointer
             temp = temp->next;
-
+        //if no value, then do nothing
         if (!temp) return; 
-
+        //if temp points to the previous node
         if (temp->prev)
+            //adjust the next pointer of the prior node
             temp->prev->next = temp->next;
         else
+        //or else update the head
             head = temp->next; 
 
+        //if temp points to next node
         if (temp->next)
+        //adjust the previous pointer to the next node
             temp->next->prev = temp->prev;
         else
+        //or else update the tail
             tail = temp->prev; 
 
+        //delete the node
         delete temp;
     }
 
+    //deletes a node at a given position in the list
     void delete_pos(int pos) {
+        //if the list is empty print out list is empty
         if (!head) {
             cout << "List is empty." << endl;
             return;
         }
     
+    //if the position is 1 then delete the front node
         if (pos == 1) {
             pop_front();
             return;
         }
     
+    //used to travers the list
         Node* temp = head;
-    
+    //is pos is less than 1, print out position doesn't exist
         for (int i = 1; i < pos; i++){
             if (!temp) {
                 cout << "Position doesn't exist." << endl;
                 return;
             }
+            //else move to the next node
             else
                 temp = temp->next;
         }
+        //the temp node doesn't exist, print out position doesn't exist
         if (!temp) {
             cout << "Position doesn't exist." << endl;
             return;
         }
     
+        // if it reaches the end then delete the last node
         if (!temp->next) {
             pop_back();
             return;
         }
     
+        //point to prev node
         Node* tempPrev = temp->prev;
+        //set next pointer to prev node
         tempPrev->next = temp->next;
+        //set previous pointer to next node
         temp->next->prev = tempPrev;
+        //delete it
         delete temp;
     }
 
+    //put a node at the end of the list
     void push_back(int v) {
+        //create a new node
         Node* newNode = new Node(v);
+        //if the list is empty then the new node equals head and tail
         if (!tail)
             head = tail = newNode;
         else {
+            //or else tail node is adjusted to the next pointer
             tail->next = newNode;
+            //then prev pointer sets the new node
             newNode->prev = tail;
+            //and tail is updated
             tail = newNode;
         }
     }
     
+    //put a node at the front of the list
     void push_front(int v) {
+        //create the new node
         Node* newNode = new Node(v);
+        //if empty then head and tail equal the new node
         if (!head)
             head = tail = newNode;
         else {
+            // else 
             newNode->next = head;
             head->prev = newNode;
             head = newNode;
