@@ -177,80 +177,127 @@ public:
         if (!head)
             head = tail = newNode;
         else {
-            // else 
+            // else modify pointer of new node
             newNode->next = head;
+            // modify prev pointer of head node
             head->prev = newNode;
+            //update head node
             head = newNode;
         }
     }
     
+    //removes the front node
     void pop_front() {
 
+        //if the list is empty print list is empty
         if (!head) {
             cout << "List is empty." << endl;
             return;
         }
 
+        //temp pointer to head node
         Node * temp = head;
 
+    //if head has a value, update the head and then set prev pointer to nullptr
         if (head->next) {
             head = head->next;
             head->prev = nullptr;
         }
         else
+        //else head and tail equal nullptr
             head = tail = nullptr;
         delete temp;
     }
 
+    //removes the last node
     void pop_back() {
+        //if the list is empty print list is empty
         if (!tail) {
             cout << "List is empty." << endl;
             return;
         }
+         //temp pointer to tail node
         Node * temp = tail;
+
+    //if tail has a value, update the tail and then set next pointer of new tail to nullptr
 
         if (tail->prev) {
             tail = tail->prev;
             tail->next = nullptr;
         }
         else
+        //else head and tail equal nullptr
             head = tail = nullptr;
+            //delete the previous tail node
         delete temp;
     }
 
+//destructor that will delete nodes and free up the memory so no memory leak
     ~DoublyLinkedList() {
+        //delete as you traverse
         while (head) {
+            //point to the head node
             Node* temp = head;
+            //move to following node
             head = head->next;
+            //delete the previous head node
             delete temp;
         }
     }
+
+    //print the list from start to end
     void print() {
+        //traverse the list using temp pointer
         Node* current = head;
         if (!current) {
+        //if the list is empty print list is empty
             cout << "List is empty." << endl;
             return;
         }
         while (current) {
+            //print the data of the current node with a space then move to the next and print again 
             cout << current->data << " ";
             current = current->next;
         }
         cout << endl;
     }
 
+    //prints it in reverse from end to start
     void print_reverse() {
+        //traverse the list using temp pointer starting at the tail
         Node* current = tail;
         if (!current) { 
+            //if the list is empty print list is empty
             cout << "List is empty." << endl;
             return;
         }
+        //print the data from current node with a space then move to previous node
         while (current) {
             cout << current->data << " ";
             current = current->prev;
         }
         cout << endl;
     }
+
+    //will print the list skipping one each time
+    void every_other_element() {
+        Node* current = head;
+        if(!current)
+        cout << "List is empty." << endl;
+        return;
+        }
+
+        //use the bool to skip over a node
+        bool pass = false;
+        while (current) {
+            if(pass)
+                cout << current->data << " ";
+            pass = current-> next;
+            current = current->next;
+        }
+        cout << endl;
 };
+
 
 int main() {
     cout << MIN_NR + MIN_LS + MAX_NR + MAX_LS;  // dummy statement to avoid compiler warning
