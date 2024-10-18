@@ -1,4 +1,8 @@
 #include <iostream>
+#include <fstream>
+#include <vector>
+#include <cstdlib>
+#include <ctime>
 using namespace std;
 
 const int MIN_NR = 10, MAX_NR = 99, MIN_LS = 5, MAX_LS = 20;
@@ -203,9 +207,25 @@ public:
     }
 };
 
-int main() {
-    cout << MIN_NR + MIN_LS + MAX_NR + MAX_LS;  // dummy statement to avoid compiler warning
+void openTxt(vector<string>& names) {
+    ifstream file("C:\\Users\\ahussain\\Downloads\\names.txt");
+    string name;
+    while (file >> name)
+    names.push_back(name);
+}
 
+int main() {
+    srand(time(0));
+    vector<string> names;
+    openTxt(names);
+
+    //check to see if it opens correctly
+    if(names.empty()) {
+        cout << "nothing" << endl;
+        return 1;
+    }
+
+    cout << "opened" << endl;
     
     return 0;
 }
