@@ -219,13 +219,22 @@ int main() {
     vector<string> names;
     openTxt(names);
 
-    //check to see if it opens correctly
     if(names.empty()) {
         cout << "nothing" << endl;
         return 1;
     }
 
+    DoublyLinkedList line;
     cout << "opened" << endl;
+    //trying to print first 5 names
+    for (int i = 0; i<5; ++i) {
+        //rand amount of customers
+        string customer = names[rand() / names.size()];
+        line.push_back(customer);
+        cout << customer << " has joined the line" << endl;
+    }
+
+    line.print();
     
     return 0;
 }
