@@ -225,16 +225,35 @@ int main() {
     }
 
     DoublyLinkedList line;
+
     cout << "opened" << endl;
     //trying to print first 5 names
     for (int i = 0; i<5; ++i) {
         //rand amount of customers
-        string customer = names[rand() / names.size()];
+        string customer = names[rand() % names.size()];
         line.push_back(customer);
         cout << customer << " has joined the line" << endl;
     }
 
     line.print();
+
+    for (int minute = 1; minute <= 20; ++minute) {
+        cout << "Time step #" << minute << ":" << endl;
+        
+        int prob = rand() % 100 + 1;  // returns random number 1-100
+        if(prob <= 40) {
+            string servedCust = line.pop_front();
+            cout << servedCust << " is Served" << endl;
+        }
+
+        prob = rand() % 100 + 1;
+        if(prob <=60) {
+            string newCust = names[rand() % names.size()];
+            line.push_back(newCust);
+            cout << newCust << " has joined the line" << endl;
+        }
+        line.print();
+    }
     
     return 0;
 }
