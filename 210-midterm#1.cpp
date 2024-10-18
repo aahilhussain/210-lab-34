@@ -35,27 +35,38 @@ public:
             return;
         }
 
-        //
+        //creates a new node using the given variable value
         Node* newNode = new Node(value);
+        //if the list is empty then the new node(value) will equal the head as well as the tail
         if (!head) {
             head = tail = newNode;
             return;
         }
-
+        
+        //creates a temp pointer that will traverse the list
         Node* temp = head;
+        //as long as i is less than the last position, it will go to the next position
         for (int i = 0; i < position && temp; ++i)
             temp = temp->next;
-
+        //continuation 
+        //if the temp pointer goes past the end, it will output the string because it will have no value to point to
+        //will delete the newNode afterwards
         if (!temp) {
             cout << "Position exceeds list size. Node not inserted.\n";
             delete newNode;
             return;
         }
 
+        //sets the next pointer to the newnode
         newNode->next = temp->next;
+        //sets prev pointer to the temp
         newNode->prev = temp;
+        //if temp points to the next pointer where it exists
         if (temp->next)
+        //this will set the prev pointer of the next node to point to newNode
+        //essentially helps maintain the structure
             temp->next->prev = newNode;
+        //or else it will update the tail if it reaches the end
         else
             tail = newNode;
         temp->next = newNode;
