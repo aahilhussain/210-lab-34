@@ -25,6 +25,19 @@ private:
 
 public:
     DoublyLinkedList() { head = nullptr; tail = nullptr; }
+    bool isEmpty() {
+        return head == nullptr;
+    }
+
+    int size() {
+        int count = 0;
+        Node* temp = head;
+        while(temp) {
+            count++;
+            temp = temp->next;
+        }
+        return count;
+    }
 
     void insert_after(string value, int position) {
         if (position < 0) {
@@ -80,15 +93,9 @@ public:
         delete temp;
     }
 
-    void delete_pos(int pos) {
-        if (!head) {
-            cout << "List is empty." << endl;
-            return;
-        }
-    
+    string delete_pos(int pos) {
         if (pos == 1) {
-            pop_front();
-            return;
+            return pop_front();
         }
     
         Node* temp = head;
@@ -96,7 +103,7 @@ public:
         for (int i = 1; i < pos; i++){
             if (!temp) {
                 cout << "Position doesn't exist." << endl;
-                return;
+                return "";
             }
             else
                 temp = temp->next;
@@ -253,6 +260,30 @@ int main() {
             line.push_back(newCust);
             cout << newCust << " has joined the line" << endl;
         }
+
+        prob = rand() % 100 + 1;
+        if (prob <=20){
+            string endCust = line.pop_back();
+            cout << endCust << " (at the rear) has left the line" << endl;
+        }
+        line.print();
+
+        prob = rand() % 100 + 1;
+        if (prob <= 10){
+            int pos = rand() % line.size();
+            string leavingCust;
+            //string leavingCust = line.delete_pos(pos);
+            cout << leavingCust<< " has left the line" << endl;
+        }
+
+        prob = rand() % 100 + 1;
+        if (prob <= 10) {
+            string VIPCust = names[rand() % names.size()];
+            line.push_front(VIPCust);
+            cout << VIPCust << " (VIP) joins the front of the line" << endl;
+        }
+
+
         line.print();
     }
     
