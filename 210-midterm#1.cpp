@@ -281,27 +281,52 @@ public:
 
     //will print the list skipping one each time
     void every_other_element() {
+        //traverse list
         Node* current = head;
-        if(!current)
+        if(!current){
+        //if list is empty print out list is empty
         cout << "List is empty." << endl;
         return;
         }
+        
 
         //use the bool to skip over a node
         bool pass = false;
-        while (current) {
-            if(pass)
+        while(current) {
+            //if the node does not equal pass print out the data
+            if(!pass)
                 cout << current->data << " ";
-            pass = current-> next;
+            //once data is printed then set the bool to true
+            //this will set the condition to false causing it to skip a node
+            pass = !pass;
             current = current->next;
         }
         cout << endl;
+    }
 };
 
 
 int main() {
     cout << MIN_NR + MIN_LS + MAX_NR + MAX_LS;  // dummy statement to avoid compiler warning
+    
+    //create a doublylinkedlist object
+    DoublyLinkedList list;
 
+    //insert elements into a list
+    list.push_back(1);
+    list.push_back(2);
+    list.push_back(3);
+    list.push_back(4);
+    list.push_back(5);
+
+    //print a list
+    cout << "Final List: ";
+    list.print();
+
+    cout << endl;
+    //print every other element
+    cout << "Every other element list: ";
+    list.every_other_element();
     
     return 0;
 }
