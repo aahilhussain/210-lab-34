@@ -63,7 +63,34 @@ int main() {
             c.erase(it);
         });
     results[3][2][sim] = measure("", st, [](set<string>& c) { c.erase("TESTCODE"); });
-    cout << endl;
+
+    long long averages[4][3] = {0};
+    for (int op=0; op<4; ++op) {
+        for (int container = 0;container < 3; ++container) {
+            if (results[op][container][0] != -1) {
+                long long sum = 0;
+                for (int sim = 0; sim < simulations; ++sim) {
+                    sum += results[op][container][sim];
+                }
+                averages[op][container] = sum/simulations;
+            } else {
+                averages[op][container] = 0;
+            }
+        }
+
+    }
+
+    cout << "Number of simulations: " << simulations << endl;
+    cout << " Operation     Vector      List        Set" << endl;
+    const char* operations[] = {"Read       ", "Sort        ", "Insert      ", "Delete"     };
+    for (int op = 0; op < 4; ++op) {
+        cout << operations[op];
+        for(int container = 0; container < 3; ++container) {
+            cout << averages[op][container] << "        ";
+        }
+        cout << endl;
+    }
+
 
     return 0;
 }
