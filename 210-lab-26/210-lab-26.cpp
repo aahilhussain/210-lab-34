@@ -21,50 +21,48 @@ void readData(vector<string>& vec, list<string>& lst, set<string>& st, const str
     }
 }
 
-template <typename Container>
-void measure(const string& operation, Container& container, function<void(Container&)> func) {
+template <typename Container, typename Func>
+long long measure(const string& operation, Container& container, Func func) {
     auto start = high_resolution_clock::now();
     func(container);
     auto end = high_resolution_clock::now();
-    auto duration = duration_cast<microseconds>(end - start).count();
-    cout << operation << " " << duration << " ";
+    return duration_cast<microseconds>(end - start).count();
 }
 
 int main() {
-    vector<string> vec;
-    list<string> lst;
-    set<string> st;
+    const int simulations = 15;
+    long long results [4][3][simulations] = {0};
 
-    // Reading data
-    measure("Read     ", vec, [&](vector<string>& c) { readData(c, lst, st, "codes.txt"); });
-    measure("", lst, [&](list<string>& c) { /* Already read in previous measure */ });
-    measure("", st, [&](set<string>& c) { /* Already read in previous measure */ });
-    cout << endl;
+    for (int sim = 0; sim < simulations; ++sim){
+        vector<string> vec;
+        list<string> lst;
+        set<string> st;
 
-    // Sorting data
-    measure("Sort     ", vec, [](vector<string>& c) { sort(c.begin(), c.end()); });
-    measure("", lst, [](list<string>& c) { c.sort(); });
-    cout << -1 << " "; // Set is already sorted
-    cout << endl;
+        // Reading data
+        results[0][0][sim] = measure("Read    ", vec, [&](vector<string>& c){readData(c, lst, st, "codes.txt"); });
 
-    // Inserting data
-    measure("Insert   ", vec, [](vector<string>& c) { c.insert(c.begin() + c.size() / 2, "TESTCODE"); });
-    measure("", lst, [](list<string>& c) {
-        auto it = c.begin();
-        advance(it, c.size() / 2);
-        c.insert(it, "TESTCODE");
-    });
-    measure("", st, [](set<string>& c) { c.insert("TESTCODE"); });
-    cout << endl;
+        // Sorting data
+        results[1][0][sim] = measure("Sort     ", vec, [](vector<string>& c) { sort(c.begin(), c.end()); });
+        results[1][1][sim] = measure("", lst, [](list<string>& c) { c.sort(); });
+        results[1][2][sim] = -1;
 
-    // Deleting data
-    measure("Delete   ", vec, [](vector<string>& c) { c.erase(c.begin() + c.size() / 2); });
-    measure("", lst, [](list<string>& c) {
-        auto it = c.begin();
-        advance(it, c.size() / 2);
-        c.erase(it);
-    });
-    measure("", st, [](set<string>& c) { c.erase("TESTCODE"); });
+        // Inserting data
+        results[2][0][sim] = measure("Insert   ", vec, [](vector<string>& c) { c.insert(c.begin() + c.size() / 2, "TESTCODE"); });
+        results[2][1][sim] = measure("", lst, [](list<string>& c) {
+            auto it = c.begin();
+            advance(it, c.size() / 2);
+            c.insert(it, "TESTCODE");
+        });
+        results[2][2][sim] = measure("", st, [](set<string>& c) {c.insert("TESTCODE"); });
+
+        // Deleting data
+        results[3][0][sim] = measure("Delete   ", vec, [](vector<string>& c) { c.erase(c.begin() + c.size() / 2); });
+        results[3][1][sim] = measure("", lst, [](list<string>& c) {
+            auto it = c.begin();
+            advance(it, c.size() / 2);
+            c.erase(it);
+        });
+    results[3][2][sim] = measure("", st, [](set<string>& c) { c.erase("TESTCODE"); });
     cout << endl;
 
     return 0;
