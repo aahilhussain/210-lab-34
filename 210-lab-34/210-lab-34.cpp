@@ -3,6 +3,8 @@
 #include <unordered_set>
 #include <stack>
 #include <queue>
+#include <set>
+#include <climits>
 
 using namespace std;
 
@@ -102,6 +104,40 @@ public:
 
     cout << endl;
     }
+
+    void dijkstra(int start) {
+        set<Pair> setds;
+        vector<int> dist(SIZE, INT_MAX);
+
+        setds.insert(make_pair(0, start));
+        dist[start] = 0;
+
+        while (!setds.empty()) {
+            Pair tmp = *(setds.begin());
+            setds.erase(setds.begin());
+
+            int u = tmp.second;
+
+            for (auto &neighbor : adjList[u]) {
+                int v = neighbor.first;
+                int weight = neighbor.second;
+
+                if (dist[v] > dist[u] + weight) {
+                    if (dist[v] != INT_MAX) {
+                        setds.erase(setds.find(make_pair(dist[v], v)));
+                    }
+
+                    dist[v] = dist[u] + weight;
+                    setds.insert(make_pair(dist[v], v));
+                }
+            }
+        }
+
+        cout << "Shortest path from node " << start << ";" << endl;
+        for (int i = 0; i < SIZE; i++) {
+            cout << start << " -> " << i << " : " << dist[i] << endl;
+        }
+    }
 };
 
 int main()
@@ -130,5 +166,7 @@ int main()
     //Perform DFS and BFS
     graph.DFS(0);
     graph.BFS(0);
+
+    graph.dijkstra(0);
     return 0;
 }
