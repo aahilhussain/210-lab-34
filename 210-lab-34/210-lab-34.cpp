@@ -6,7 +6,7 @@
 
 using namespace std;
 
-const int SIZE = 9;
+const int SIZE = 10;
 
 struct Edge {
     int src, dest, weight;
@@ -35,12 +35,13 @@ public:
     // Print the graph's adjacency list
     void printGraph()
     {
-        cout << "Graph's adjacency list:" << endl;
+        cout << "Transportation Network Topology" << endl;
+        cout << "===============================" << endl;
         for (int i = 0; i < adjList.size(); i++)
         {
-            cout << i << " --> ";
+            cout << "City" << i << " connects to:" << endl;
             for (Pair v : adjList[i])
-                cout << "(" << v.first << ", " << v.second << ") ";
+                cout << " -> City " << v.first << " (Distance: " << v.second << " km)" << endl;
             cout << endl;
         }
     }
@@ -51,18 +52,21 @@ public:
         stack<int> stack;
         stack.push(start);
 
-        cout << "DFS starting from vertex " << start << ": ";
+        cout << "Network Trace (DFS) from City " << start << ":" << endl;
+        cout << "Purpose: Tracing possible routes through the network" << endl;
+        cout << "======================================" << endl;
         while (!stack.empty()) {
             int v = stack.top();
             stack.pop();
 
             if (visited.find(v) == visited.end()) {
-                cout << v << " ";
+                cout << "Inspecting City " << v << endl;
                 visited.insert(v);
             }
 
             for (auto &neighbor : adjList[v]) {
                 if (visited.find(neighbor.first) == visited.end()) {
+                    cout << " -> Possible route to City " << neighbor.first << " - Distance: " << neighbor.second << " km" << endl;
                     stack.push(neighbor.first);
                 }
             }
@@ -76,18 +80,21 @@ public:
     queue<int> queue;
     queue.push(start);
 
-        cout << "BFS starting from vertex " << start << ": ";
+        cout << "Layer-by-Layer Network Inspection (BFS) from City " << start << ":" << endl;
+        cout << "Purpose: Analyzing service areas by distance from source" << endl;
+        cout << "======================================" << endl;
         while(!queue.empty()) {
             int v = queue.front();
             queue.pop();
 
             if (visited.find(v) == visited.end()) {
-                cout << v << " ";
+                cout << "Checking City " << v << endl;
                 visited.insert(v);
             }
 
             for (auto &neighbor : adjList[v]) {
                 if (visited.find(neighbor.first) == visited.end()) {
+                    cout << " -> Next service area: City " << neighbor.first << " - Distance: " << neighbor.second << " km" << endl;
                     queue.push(neighbor.first);
                 }
             }
@@ -113,7 +120,7 @@ int main()
         {5, 2, 7},
         {1, 9, 5},
         {7, 6, 3},
-        {5, 5, 5},
+        {5, 8, 2},
         {2, 0, 9}};
     // Creates graph
     Graph graph(edges);
