@@ -5,6 +5,7 @@
         "initializer_list": "cpp",
         "type_traits": "cpp",
         "vector": "cpp",
-        "xutility": "cpp"
+        "xutility": "cpp",
+        "iterator": "cpp"
     }
 }
