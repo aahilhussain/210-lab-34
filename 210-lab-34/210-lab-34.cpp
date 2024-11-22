@@ -138,6 +138,44 @@ public:
             cout << start << " -> " << i << " : " << dist[i] << endl;
         }
     }
+
+    void MSTedge() {
+        priority_queue<Pair, vector<Pair>, greater<Pair>> pq;
+        int src = 0;
+        vector<int> key(SIZE, INT_MAX);
+        vector<int> parent(SIZE, -1);
+        vector<bool> inMST(SIZE, false);
+
+        pq.push(make_pair(0, src)); 
+        key[src] = 0;
+
+        while (!pq.empty()) {
+            int u = pq.top().second;
+            pq.pop();
+
+            inMST[u] = true;
+
+            for(auto &neighbor : adjList[u]) {
+                int v = neighbor.first;
+                int weight = neighbor.second;
+
+                if(!inMST[v] && key[v] > weight) {
+                    key[v] = weight;
+                    pq.push(make_pair(key[v], v));
+                    parent[v] = u;
+                }
+            }
+        }
+
+        cout << "Minimum Spanning Tree edges:" << endl;
+        for(int i = 1; i<SIZE; i++) {
+            if (parent[i] != -1) {
+                cout << "Edge from " << parent[i] << " to " << i << " with capacity: " << key[i] << " units" << endl;
+            }
+        }
+    }
+
+
 };
 
 int main()
@@ -168,5 +206,8 @@ int main()
     graph.BFS(0);
 
     graph.dijkstra(0);
+
+    graph.MSTedge();
+
     return 0;
 }
