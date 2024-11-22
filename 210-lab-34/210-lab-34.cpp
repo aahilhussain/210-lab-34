@@ -195,19 +195,47 @@ int main()
         {1, 9, 5},
         {7, 6, 3},
         {5, 8, 2},
-        {2, 0, 9}};
-    // Creates graph
-    Graph graph(edges);
-    // Prints adjacency list representation of graph
-    graph.printGraph();
+        {2, 0, 9}
+    };
 
-    //Perform DFS and BFS
-    graph.DFS(0);
-    graph.BFS(0);
+    Graph graph(edges); 
+    
+    int choice;
 
-    graph.dijkstra(0);
-
-    graph.MSTedge();
+    do { 
+        cout << "Transportation Network Menu: " << endl;
+        cout << "[1] Display Transportation network" << endl;
+        cout << "[2] Check " << endl;
+        cout << "[3] Plan Transportation Route(DFS)" << endl;
+        cout << "[4] Calculate shortest paths" << endl;
+        cout << "[5] Find Minimum Spanning Tree" << endl;
+        cout << "[0] Exit" << endl;
+        cout << "Enter your choice: ";
+        cin >> choice;
+    
+        switch (choice) {
+            case 1: 
+                graph.printGraph();
+                break;
+            case 2:
+                graph.BFS(0);
+                break;
+            case 3:
+                graph.DFS(0);
+                break;
+            case 4:
+                graph.dijkstra(0);
+                break;
+            case 5:
+                graph.MSTedge();
+                break;
+            case 0:
+                cout << "Exiting..." << endl;
+                break;
+            default:
+                cout << "Invalid choice. Please try again" << endl;
+        }
+    } while (choice != 0);
 
     return 0;
 }
